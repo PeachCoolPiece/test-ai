@@ -15,10 +15,12 @@
  */
 package com.example.test.ai.metadata;
 
+import lombok.Getter;
 import org.springframework.ai.image.ImageGenerationMetadata;
 
 import java.util.Objects;
 
+@Getter
 public class OpenAiImageGenerationMetadata implements ImageGenerationMetadata {
 
 	private String revisedPrompt;
@@ -26,11 +28,7 @@ public class OpenAiImageGenerationMetadata implements ImageGenerationMetadata {
 	public OpenAiImageGenerationMetadata(String revisedPrompt) {
 		this.revisedPrompt = revisedPrompt;
 	}
-
-	public String getRevisedPrompt() {
-		return revisedPrompt;
-	}
-
+	
 	@Override
 	public String toString() {
 		return "OpenAiImageGenerationMetadata{" + "revisedPrompt='" + revisedPrompt + '\'' + '}';

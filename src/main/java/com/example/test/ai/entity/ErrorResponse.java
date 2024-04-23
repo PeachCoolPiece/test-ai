@@ -6,31 +6,34 @@ import lombok.Setter;
 import org.codehaus.groovy.ast.expr.FieldExpression;
 import org.springframework.validation.FieldError;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
 @Getter
 @Setter
-
 public class ErrorResponse {
-
+    
     
     private String errorCode;
     
     
-    private List<FieldError> expressions;
+    private List<Map<String,String>> expressions;
     
     public ErrorResponse(String errorCode) {
         this.errorCode = errorCode;
+    }
+    
+    public void setFieldError(List<FieldError> fieldErrors) {
         if (this.expressions == null) {
             this.expressions = new ArrayList<>();
         }
-    }
-    public void setFieldError(List<FieldError> fieldErrors){
-        List<FieldError> collect = fieldErrors.stream().map(err -> new FieldError(err.getObjectName(), err.getField(), err.getDefaultMessage()))
-                .collect(Collectors.toList());
-        this.setExpressions(collect);
+        fieldErrors.forEach(err -> {
+                    Map<String, String> map = new HashMap<>();
+                    map.put(err.getObjectName(), err.getDefaultMessage());
+                    this.expressions.add(map);
+                });
+        
+        
     }
 }
